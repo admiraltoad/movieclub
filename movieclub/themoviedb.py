@@ -1,5 +1,7 @@
 from movieclub.framework.rest_api import RestAPI
 from movieclub.obj.movie import Movie
+from movieclub.helpers import similar
+
 class TheMovieDB(RestAPI):
     def __init__(self, api_token):
         """Used to interact with TheMovieDB Rest API"""
@@ -17,9 +19,10 @@ class TheMovieDB(RestAPI):
         resp = self.get(f"search/movie", params)
         for match in resp.get("results", []):
             # match both the movie title and expected release year
-            if str(match.get("title")).lower() == title.lower() and \
+            if similar(match.get("title"), title) >= 0.95 and \
                     match.get("release_date").startswith(year):
                 movie_match = self.get_movie(match["id"])
+                break
         return movie_match
 
     def get_movie(self, id):
