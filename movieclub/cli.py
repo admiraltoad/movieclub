@@ -1,23 +1,36 @@
 import logging
+import os.path
 import click
 import csv
 import pprint
+from pathlib import Path
 from movieclub.themoviedb import TheMovieDB
 from movieclub.helpers import create_counter
+from movieclub.framework.config import Config
 
 @click.group()
 @click.version_option()
-def cli():
+@click.option("--config-path", default="%AppData%\movieclub")
+@click.pass_context
+def cli(ctx, config_path):
     """movie club test"""
+    config_path = Path(os.path.expandvars(config_path))
+    config_file = config_path / "config.yml"
+    if not config_file.exists():
+        config_path.mkdir(parents=True, exist_ok=True)
+        with open(config_file, "w") as file:
+            file.writelines(["# movie club configuration for theMovieDB\n", "api_key:\n", "user_token:\n"])
+
+    ctx.obj = Config(config_file)
 
 @cli.command()
-@click.argument("api_token")
 @click.argument("movie_title")
 @click.argument("movie_year")
-def search(api_token, movie_title, movie_year):
+@click.pass_context
+def search(ctx, movie_title, movie_year):
     """Does a search for a movie by title and release year."""
     log = logging.getLogger()
-    themoviedb = TheMovieDB(api_token)
+    themoviedb = TheMovieDB(ctx.obj.api_key)
     movie_match = themoviedb.search_movie(movie_title, movie_year)
     if movie_match:
         click.secho(movie_match)
@@ -25,12 +38,12 @@ def search(api_token, movie_title, movie_year):
         click.secho("No match.", fg="red")
 
 @cli.command()
-@click.argument("api_token")
 @click.argument("csv_file")
-def analyse(api_token, csv_file):
+@click.pass_context
+def analyse(ctx, csv_file):
     """Does a search for a movie by title and release year."""
     log = logging.getLogger()
-    themoviedb = TheMovieDB(api_token)
+    themoviedb = TheMovieDB(ctx.obj.api_key)
 
     all_crew = []
     all_cast = []
