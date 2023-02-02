@@ -35,6 +35,7 @@ def analyse(api_token, csv_file):
     all_crew = []
     all_cast = []
     all_keywords = []
+    all_similiar_movies = []
 
     with open(csv_file) as file:
         reader = csv.reader(file)
@@ -47,12 +48,12 @@ def analyse(api_token, csv_file):
                 all_cast.extend([c["name"] for c in credits["cast"]])
                 keywords = movie_match.get_keywords()
                 all_keywords.extend([c["name"] for c in movie_match.get_keywords()])
+                all_similiar_movies.extend([m.title for m in themoviedb.get_similar_movies(movie_match.id)])
             else:
                 click.secho(f"No match for '{row[0]} ({row[1]})'", fg="red")
 
     crew_count = create_counter(all_crew, 4)
-    click.secho("\n\n\n" +
-                "crew member + job occurances:")
+    click.secho("crew member + job occurances:")
     click.secho(pprint.pp(crew_count, indent=3))
 
     cast_count = create_counter(all_cast)
@@ -62,3 +63,7 @@ def analyse(api_token, csv_file):
     keyword_count = create_counter(all_keywords, 5)
     click.secho("keyword occurances:")
     click.secho(pprint.pp(keyword_count, indent=3))
+
+    sim_move_count = create_counter(all_similiar_movies, 8)
+    click.secho("similar movies occurances:")
+    click.secho(pprint.pp(sim_move_count, indent=3))

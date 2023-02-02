@@ -29,3 +29,6 @@ class TheMovieDB(RestAPI):
         """Gets the movie data by id (TMDB Movie ID)."""
         return Movie(self, self.get(f"movie/{id}"))
 
+    def get_similar_movies(self, id):
+        """Returns a list of moves similiar to the selected movie."""
+        return [Movie(self, data) for data in self.get(f"movie/{id}/similar").get("results", [])]

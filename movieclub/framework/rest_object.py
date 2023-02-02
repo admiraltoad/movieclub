@@ -9,8 +9,10 @@ class RestObject:
     def __str__(self):
         prettyp = pprint.PrettyPrinter(indent=3)
         return prettyp.pformat(self._data)
-
     @property
+    def id(self):
+        """The unique identifier for the object."""
+        return self._data.get("id")
     def _unique_name(self):
-        """A unique string identifier for the object."""
+        """A readable string identifier for the object."""
         return self._data.get("name") or self._data.get("title")
