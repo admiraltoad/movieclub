@@ -1,7 +1,9 @@
 import logging
 import click
-from movieclub.themoviedb import TheMovieDB
 import csv
+import pprint
+from movieclub.themoviedb import TheMovieDB
+from movieclub.helpers import create_counter
 
 @click.group()
 @click.version_option()
@@ -30,11 +32,33 @@ def analyse(api_token, csv_file):
     log = logging.getLogger()
     themoviedb = TheMovieDB(api_token)
 
+    all_crew = []
+    all_cast = []
+    all_keywords = []
+
     with open(csv_file) as file:
         reader = csv.reader(file)
         for row in reader:
             movie_match = themoviedb.search_movie(row[0], row[1])
             if movie_match:
                 click.secho(movie_match._unique_name)
+                credits = movie_match.get_credits()
+                all_crew.extend([f"{c['name']} ({c['job']})" for c in credits["crew"]])
+                all_cast.extend([c["name"] for c in credits["cast"]])
+                keywords = movie_match.get_keywords()
+                all_keywords.extend([c["name"] for c in movie_match.get_keywords()])
             else:
                 click.secho(f"No match for '{row[0]} ({row[1]})'", fg="red")
+
+    crew_count = create_counter(all_crew, 4)
+    click.secho("\n\n\n" +
+                "crew member + job occurances:")
+    click.secho(pprint.pp(crew_count, indent=3))
+
+    cast_count = create_counter(all_cast)
+    click.secho("cast member occurances:")
+    click.secho(pprint.pp(cast_count, indent=3))
+
+    keyword_count = create_counter(all_keywords, 5)
+    click.secho("keyword occurances:")
+    click.secho(pprint.pp(keyword_count, indent=3))
