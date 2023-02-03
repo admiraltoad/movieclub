@@ -3,7 +3,7 @@ from collections import Counter
 
 def similar(a, b):
     """Compares two strings for simularities and returns a ratio."""
-    return SequenceMatcher(None, a, b).ratio()
+    return SequenceMatcher(None, str(a).casefold(), str(b).casefold()).ratio()
 
 def create_counter(values, sample_size_min=3):
     """Creates a collection counter and returns a sorted dictionary with results above the minimum sample size."""

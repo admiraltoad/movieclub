@@ -1,12 +1,14 @@
 from movieclub.framework.rest_api import RestAPI
 from movieclub.obj.movie import Movie
 from movieclub.helpers import similar
+from movieclub.api.user_access import UserAccess
 
 class TheMovieDB(RestAPI):
-    def __init__(self, api_token):
+    def __init__(self, config):
         """Used to interact with TheMovieDB Rest API"""
-        super().__init__("https://api.themoviedb.org/3/", api_token)
-        self._api_token = api_token
+        super().__init__("https://api.themoviedb.org/3/", config)
+        self.user = UserAccess(config)
+
     def search_movie(self, title, year):
         """Search for a movie by title and release year."""
         movie_match = None

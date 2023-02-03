@@ -10,3 +10,9 @@ class Config:
     @property
     def user_token(self):
         return self._data.get("user_token")
+    @property
+    def username(self):
+        return self._data.get("username")
+    @property
+    def password(self):
+        return self._data.get("password")

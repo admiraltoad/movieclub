@@ -24,13 +24,21 @@ def cli(ctx, config_path):
     ctx.obj = Config(config_file)
 
 @cli.command()
+@click.pass_context
+def test(ctx):
+    """testing 1 2 3"""
+    themoviedb = TheMovieDB(ctx.obj)
+    resp = themoviedb.user.create_session()
+    click.secho(resp)
+
+@cli.command()
 @click.argument("movie_title")
 @click.argument("movie_year")
 @click.pass_context
 def search(ctx, movie_title, movie_year):
     """Does a search for a movie by title and release year."""
     log = logging.getLogger()
-    themoviedb = TheMovieDB(ctx.obj.api_key)
+    themoviedb = TheMovieDB(ctx.obj)
     movie_match = themoviedb.search_movie(movie_title, movie_year)
     if movie_match:
         click.secho(movie_match)
@@ -43,7 +51,7 @@ def search(ctx, movie_title, movie_year):
 def analyse(ctx, csv_file):
     """Does a search for a movie by title and release year."""
     log = logging.getLogger()
-    themoviedb = TheMovieDB(ctx.obj.api_key)
+    themoviedb = TheMovieDB(ctx.obj)
 
     all_crew = []
     all_cast = []
