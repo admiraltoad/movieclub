@@ -35,7 +35,7 @@ class UserAccess(RestAPI):
         webbrowser.open(f"https://www.themoviedb.org/auth/access?request_token={request_token}")
         if click.prompt("Has authorization been granted?"):
             data = {"request_token": request_token}
-            return self._post("auth/access_token", data=data)
+            return self._post("auth/access_token", json=data)
 
     def create_list(self, name):
         """"""
