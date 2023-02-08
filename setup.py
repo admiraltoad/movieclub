@@ -31,7 +31,7 @@ setup(
         [console_scripts]
         movieclub=movieclub.cli:cli
     """,
-    install_requires=["click"],
+    install_requires=["click", "requests", "pyyaml"],
     extras_require={
         "test": ["pytest"]
     },
