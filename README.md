@@ -38,3 +38,9 @@ Now install the dependencies and test dependencies:
 To run the tests:
 
     pytest
+
+## License
+
+This project is licensed under the **Apache license**. Feel free to edit and distribute this template as you like.
+
+See [LICENSE](LICENSE) for more information.
