@@ -41,6 +41,6 @@ To run the tests:
 
 ## License
 
-This project is licensed under the **Apache license**. Feel free to edit and distribute this template as you like.
+This project is licensed under the **Apache license**.
 
 See [LICENSE](LICENSE) for more information.
