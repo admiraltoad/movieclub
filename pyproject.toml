@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "movieclub"
+version="0.2"
+authors = [{name = "admiraltoad", email = "theadmiraltoad@gmail.com"}]
+maintainers = [
+    {name = "admiraltoad", email = "theadmiraltoad@gmail.com"},
+    {name = "Pat Sagan", email = "pcsagan@gmail.com"},
+    ]
+description = "Custom wrapper for TMDB rest api."
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["movieclub"]
+license = {file = "LICENSE"}
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = ["click", "pyyaml", "requests"]
+
+[project.urls]
+repository = "https://github.com/admiraltoad/movieclub"
+issues = "https://github.com/admiraltoad/movieclub/issues"
+ci = "https://github.com/admiraltoad/movieclub/actions"
+changelog = "https://github.com/admiraltoad/movieclub/releases"
+
+[project.scripts]
+movieclub = "movieclub.cli:cli"
+
+[tool.setuptools]
+py-modules = ["movieclub"]
