@@ -1,6 +1,7 @@
 import requests
 import urllib.parse
 
+
 class RestAPI:
     def __init__(self, base_url, config):
         """Base implimentation of a Rest API."""

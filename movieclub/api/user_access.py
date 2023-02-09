@@ -2,13 +2,13 @@ import click
 import requests
 import webbrowser
 from movieclub.framework.rest_api import RestAPI
-from movieclub.obj.movie import Movie
-from movieclub.helpers import similar
+
 
 class UserAccess(RestAPI):
     def __init__(self, config):
         """Used to interact with TheMovieDB Rest API at the User Access level"""
         super().__init__("https://api.themoviedb.org/4/", config)
+
     def get(self, url, params=None):
         """"""
         headers = {"Authorization": f"Bearer {self._config.user_token}",

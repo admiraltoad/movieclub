@@ -1,4 +1,3 @@
-import logging
 import os.path
 import click
 import csv
@@ -8,9 +7,10 @@ from movieclub.themoviedb import TheMovieDB
 from movieclub.helpers import create_counter
 from movieclub.framework.config import Config
 
+
 @click.group()
 @click.version_option()
-@click.option("--config-path", default="%AppData%\movieclub")
+@click.option("--config-path", default="%AppData%/movieclub")
 @click.pass_context
 def cli(ctx, config_path):
     """movie club test"""
@@ -23,6 +23,7 @@ def cli(ctx, config_path):
 
     ctx.obj = Config(config_file)
 
+
 @cli.command()
 @click.pass_context
 def test(ctx):
@@ -31,13 +32,13 @@ def test(ctx):
     resp = themoviedb.user.create_session()
     click.secho(resp)
 
+
 @cli.command()
 @click.argument("movie_title")
 @click.argument("movie_year")
 @click.pass_context
 def search(ctx, movie_title, movie_year):
     """Does a search for a movie by title and release year."""
-    log = logging.getLogger()
     themoviedb = TheMovieDB(ctx.obj)
     movie_match = themoviedb.search_movie(movie_title, movie_year)
     if movie_match:
@@ -45,12 +46,12 @@ def search(ctx, movie_title, movie_year):
     else:
         click.secho("No match.", fg="red")
 
+
 @cli.command()
 @click.argument("csv_file")
 @click.pass_context
 def analyse(ctx, csv_file):
     """Does a search for a movie by title and release year."""
-    log = logging.getLogger()
     themoviedb = TheMovieDB(ctx.obj)
 
     all_crew = []
@@ -67,7 +68,6 @@ def analyse(ctx, csv_file):
                 credits = movie_match.get_credits()
                 all_crew.extend([f"{c['name']} ({c['job']})" for c in credits["crew"]])
                 all_cast.extend([c["name"] for c in credits["cast"]])
-                keywords = movie_match.get_keywords()
                 all_keywords.extend([c["name"] for c in movie_match.get_keywords()])
                 all_similiar_movies.extend([m.title for m in themoviedb.get_similar_movies(movie_match.id)])
             else:

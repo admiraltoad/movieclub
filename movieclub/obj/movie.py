@@ -1,5 +1,6 @@
 from movieclub.framework.rest_object import RestObject
 
+
 class Movie(RestObject):
     @property
     def title(self):
