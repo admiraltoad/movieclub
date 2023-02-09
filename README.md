@@ -1,6 +1,9 @@
-<p align="center">
+<div align="center">
   <img src="https://i.imgur.com/C2Appe9.png" title="movieclub">
-</p>
+  
+  [![Tests](https://img.shields.io/badge/Tests-passing-forestgreen.svg)](https://github.com/admiraltoad/movieclub/actions?query=workflow%3ATest)
+  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/admiraltoad/movieclub/blob/master/LICENSE)
+</div>
 
 ## Installation
 
@@ -42,5 +45,3 @@ See [LICENSE](LICENSE) for more information.
 
 [![PyPI](https://img.shields.io/pypi/v/movieclub.svg)](https://pypi.org/project/movieclub/)
 [![Changelog](https://img.shields.io/github/v/release/admiraltoad/movieclub?include_prereleases&label=changelog)](https://github.com/admiraltoad/movieclub/releases)
-[![Tests](https://github.com/admiraltoad/movieclub/workflows/Test/badge.svg)](https://github.com/admiraltoad/movieclub/actions?query=workflow%3ATest)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/admiraltoad/movieclub/blob/master/LICENSE)
